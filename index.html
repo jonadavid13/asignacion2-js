@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asignación 2 - JS</title>
+    <link rel="shortcut icon" href="assets/icons/js-icon-rounded.png" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/styles/index.css">
+    <script src="assets/js/index.js"></script>
+</head>
+<body onload="cargarData()">
+    <header class="header align-items-center">
+        <a class="main-link" href="/">
+            <h4 class="header-title">JavaScript - 2do Corte</h3>
+        </a>
+    </header>
+    <main class="main-container">
+        <section class="ejercicio-container">
+            
+            <div class="nav-container">
+                <h4 class="title-container mb-0">Lista de Actividades</h4>
+                <button 
+                    type="button"
+                    id="btnCargar" 
+                    class="btn btn-primary" 
+                    data-bs-toggle="modal" 
+                    data-bs-target="#modalActividad" 
+                    data-bs-whatever="inicial"
+                    onclick="crearActividad()">
+                    Crear actividad
+                </button>
+            </div>
+
+            <section id="actividades" class="actividades-container">
+                <card class="card-actividad card d-none">
+                    <div class="card-body">
+                        <div class="text-group text-header">
+                            <span class="title">Descripción: </span>
+                            <span>Cortar peras y manzanas</span>
+                        </div>
+                        <div class="text-group">
+                            <span class="title">Duración en días: </span>
+                            <span>3</span>
+                        </div>
+                        <div class="text-group">
+                            <span class="title">Fecha de inicio: </span>
+                            <span>12/10/23</span>
+                        </div>
+                        <div class="text-group">
+                            <span class="title">Fecha de fin:</span>
+                            <span>--/--/--</span>
+                        </div>
+                        <div class="text-group">
+                            <span class="title">Estado: </span>
+                            <span>En progreso</span>
+                        </div>
+                        <div class="text-group">
+                            <span class="title">Responsable: </span>
+                            <span>Pedro Gómez</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button id="btnCompletar" class="btn btn-success">Completado</button>
+
+                        <div class="btn-group">
+                            <button id="editarActividad" class="btn btn-warning">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                </svg>
+                                <span class="floatLabel label-editar">Editar actividad</span>
+                            </button>
+                            <button id="eliminarActividad" class="btn btn-danger">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                    <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                                </svg>
+                                <span class="floatLabel label-eliminar">Eliminar actividad</span>
+                            </button>
+                        </div>
+                    </div>
+                </card>
+
+                <card class="card-actividad card d-none">
+                    <div class="card-body">
+                        <div class="text-group text-header">
+                            <span class="title">Descripción: </span>
+                            <span>Cortar peras y manzanas</span>
+                        </div>
+                        <div class="text-group">
+                            <span class="title">Duración en días: </span>
+                            <span>3</span>
+                        </div>
+                        <div class="text-group">
+                            <span class="title">Fecha de inicio: </span>
+                            <span>12/10/23</span>
+                        </div>
+                        <div class="text-group">
+                            <span class="title">Fecha de fin:</span>
+                            <span>--/--/--</span>
+                        </div>
+                        <div class="text-group">
+                            <span class="title">Estado: </span>
+                            <span>En progreso</span>
+                        </div>
+                        <div class="text-group">
+                            <span class="title">Responsable: </span>
+                            <span>Pedro Gómez</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button id="btnCompletar" class="btn btn-success">Completado</button>
+
+                        <div class="btn-group">
+                            <button id="editarActividad" class="btn btn-warning">Edit</button>
+                            <button id="eliminarActividad" class="btn btn-danger">Del</button>
+                        </div>
+                    </div>
+                </card>
+            </section>
+        </section>
+        <div class="modal fade" id="modalActividad" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar actividad</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group mb-3">
+                        <label for="descripcion" class="form-label">Descripción</label>
+                        <textarea name="" id="descripcion" class="form-control"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="dias" class="col-form-label">Duración en días:</label>
+                        <input class="form-control" type="number" min="1" id="dias"></input>
+                    </div>
+                    <div class="mb-3">
+                        <label for="fechaInicio" class="col-form-label">Fecha de inicio:</label>
+                        <input class="form-control" type="date" id="fechaInicio"></input>
+                    </div>
+                    <div class="mb-3">
+                        <label for="responsable" class="col-form-label">Responsable de la actividad:</label>
+                        <input class="form-control" type="text" id="responsable" placeholder="Persona encargada de la actividad"/>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+              </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 
+        <form>
+                    <div class="mb-3">
+                      <label for="descripcion" class="col-form-label">Descripción:</label>
+                      <textarea type="text" class="form-control" id="descripcion">
+                    </div>
+                    <div class="mb-3">
+                      <label for="dias" class="col-form-label">Message:</label>
+                      <input class="form-control" type="number" min="1" id="dias"></input>
+                    </div>
+                    <div class="mb-3">
+                      <label for="fechaInicio" class="col-form-label">Fecha de inicio:</label>
+                      <input class="form-control" type="date" id="fechaInicio"></input>
+                    </div>
+                  </form>
+     -->
+    <footer class="footer d-flex justify-content-between align-items-center">
+        <span>© 2023. Jonathan Núñez - JavaScript N1113</span>
+        <a class="footer-icon" href="https://github.com/jonadavid13" target="_blank">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
+                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+            </svg>
+        </a>
+    </footer>
+        
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+@import url("https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Red Hat Display", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, Roboto, Ubuntu, "Open Sans", "Helvetica Neue", sans-serif;
+  background-color: #E2E7EC;
+  padding: 0;
+}
+
+body > * {
+  padding: 15px;
+}
+
+.header {
+  width: 100%;
+  background-color: #afc0ee;
+  display: flex;
+}
+.header .main-link {
+  text-decoration: none;
+  color: initial;
+}
+.header .header-title {
+  margin-bottom: 0;
+}
+.header .home-button {
+  padding: 3px 10px;
+  border: none;
+}
+
+.main-container {
+  min-height: calc(100vh - 114px);
+}
+.main-container .page-title {
+  border-bottom: solid #b5c3d6 0.5px;
+}
+.main-container .buttons-container {
+  width: -moz-fit-content;
+  width: fit-content;
+}
+.main-container .buttons-container .ejercicio-link {
+  width: 100%;
+  margin-bottom: 10px;
+}
+.main-container .ejercicio-container {
+  margin-top: 15px;
+}
+.main-container .ejercicio-container .nav-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.main-container .ejercicio-container .nav-container #btnCargar {
+  margin-left: 20px;
+}
+.main-container .ejercicio-container .actividades-container {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: inherit;
+}
+.main-container .ejercicio-container .actividades-container .card-actividad {
+  margin-right: 15px;
+  width: 325px;
+}
+.main-container .ejercicio-container .actividades-container .card-actividad .card-body {
+  padding: 15px;
+}
+.main-container .ejercicio-container .actividades-container .card-actividad .card-body .text-header {
+  margin-bottom: 10px;
+}
+.main-container .ejercicio-container .actividades-container .card-actividad .card-body .title {
+  font-weight: 500;
+}
+.main-container .ejercicio-container .actividades-container .card-actividad .card-body .text-group {
+  margin-bottom: 5px;
+}
+.main-container .ejercicio-container .actividades-container .card-actividad .card-body .badge {
+  font-size: 14px;
+  font-weight: 450;
+}
+.main-container .ejercicio-container .actividades-container .card-actividad .card-footer {
+  display: flex;
+  justify-content: space-between;
+}
+.main-container .ejercicio-container .actividades-container .card-actividad .card-footer .btn-group .btn {
+  position: relative;
+}
+.main-container .ejercicio-container .actividades-container .card-actividad .card-footer .btn-group #editarActividad:hover .label-editar {
+  display: initial;
+}
+.main-container .ejercicio-container .actividades-container .card-actividad .card-footer .btn-group #eliminarActividad:hover .label-eliminar {
+  display: initial;
+}
+.main-container .ejercicio-container .actividades-container .card-actividad .card-footer .floatLabel {
+  display: none;
+  position: absolute;
+  top: 40px;
+  left: 0;
+  z-index: 99;
+  background-color: rgb(110, 110, 110);
+  color: white;
+  padding: 5px 8px;
+  border-radius: 3px;
+  width: -moz-max-content;
+  width: max-content;
+  transition: all 0.15s ease-in;
+}
+.main-container .ejercicio-container .actividades-container .card-actividad .card-footer .label-editar {
+  display: none;
+}
+
+.footer {
+  background-color: #cdd9e9;
+}
+.footer .footer-icon {
+  text-decoration: none;
+  color: initial;
+}/*# sourceMappingURL=index.css.map */
