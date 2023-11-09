@@ -7,7 +7,7 @@
     <link rel="shortcut icon" href="assets/icons/js-icon-rounded.png" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/styles/index.css">
-    <script src="assets/js/index.js"></script>
+    
 </head>
 <body onload="cargarData()">
     <header class="header align-items-center">
@@ -27,7 +27,7 @@
                     data-bs-toggle="modal" 
                     data-bs-target="#modalActividad" 
                     data-bs-whatever="inicial"
-                    onclick="crearActividad()">
+                    onclick="abrirForm()">
                     Crear actividad
                 </button>
             </div>
@@ -119,7 +119,7 @@
                 </card>
             </section>
         </section>
-        <div class="modal fade" id="modalActividad" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="modalActividad" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
@@ -127,26 +127,33 @@
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group mb-3">
-                        <label for="descripcion" class="form-label">Descripción</label>
-                        <textarea name="" id="descripcion" class="form-control"></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="dias" class="col-form-label">Duración en días:</label>
-                        <input class="form-control" type="number" min="1" id="dias"></input>
-                    </div>
-                    <div class="mb-3">
-                        <label for="fechaInicio" class="col-form-label">Fecha de inicio:</label>
-                        <input class="form-control" type="date" id="fechaInicio"></input>
-                    </div>
-                    <div class="mb-3">
-                        <label for="responsable" class="col-form-label">Responsable de la actividad:</label>
-                        <input class="form-control" type="text" id="responsable" placeholder="Persona encargada de la actividad"/>
-                    </div>
+                    <form id="actividadForm">
+                        <div class="form-group mb-3">
+                            <label for="descripcion" class="form-label">Descripción</label>
+                            <textarea name="" id="descripcion" class="form-control"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="dias" class="col-form-label">Duración en días:</label>
+                            <input class="form-control" type="number" min="1" id="dias"></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="fechaInicio" class="col-form-label">Fecha de inicio:</label>
+                            <input class="form-control" type="date" id="fechaInicio"></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="fechaFin" class="col-form-label">Fecha de fin:</label>
+                            <input class="form-control" type="date" id="fechaFin"></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="responsable" class="col-form-label">Responsable de la actividad:</label>
+                            <input class="form-control" type="text" id="responsable" placeholder="Persona encargada de la actividad"/>
+                        </div>
+                    </form>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Save changes</button>
+                  <button id="cerrarModal" type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="resetForm()">Cerrar</button>
+                  <button id="botonCrear" type="button" class="btn btn-primary" onclick="crearActividad()">Crear</button>
+                  <button id="submitEdit" type="button" class="btn btn-success">Editar</button>
                 </div>
               </div>
             </div>
@@ -181,5 +188,6 @@
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    <script src="assets/js/index.js"></script>
 </body>
 </html>

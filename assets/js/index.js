@@ -1,4 +1,5 @@
 
+const modalActividadBS = document.getElementById('modalActividad');
 var actividades = [];
 
 async function cargarData(){
@@ -19,7 +20,6 @@ async function cargarData(){
 
 function cargarActividades(cards){
     var contenido = "<section class='actividades-container'>";
-
 
     if(cards.length > 0){
 
@@ -91,18 +91,63 @@ function cargarActividades(cards){
     document.getElementById("actividades").innerHTML = contenido; 
 }
 
-async function crearActividad(){
-    const modal = document.getElementById('modalActividad');
-    modal.querySelector('.modal-title').textContent = "Crear nueva actividad";
-
-    modal.querySelector("#descripcion").value = "";
-    modal.querySelector("#dias").value = "";
-    modal.querySelector("#fechaInicio").value = "";
-    modal.querySelector("#responsable").value = "";
-    
+function resetForm(){
+    document.getElementById("actividadForm").reset()
 }
 
-async function editarActividad(id){
+function abrirForm(){
+    const modal = document.getElementById('modalActividad');
+    modal.querySelector('.modal-title').textContent = "Crear nueva actividad";
+    resetForm();
+}
+
+async function crearActividad(){
+    const modal = document.getElementById('modalActividad');
+
+    let nuevaActividad = {};
+
+    const descripcion = modal.querySelector("#descripcion").value
+    const dias = modal.querySelector("#dias").value
+    const fechaInicio = modal.querySelector("#fechaInicio").value
+    const fechaFin = modal.querySelector("#fechaFin").value
+    const responsable = modal.querySelector("#responsable").value
+    
+    if(descripcion === "" || (dias === "" || dias <= 0) || fechaInicio === "" || fechaFin === "" || responsable === ""){
+        alert("Datos erróneos, verifique")
+    } else {
+        nuevaActividad = {
+            ID: actividades.length+1,
+            descripcion: descripcion,
+            dias: dias,
+            fechaInicio: fechaInicio,
+            fechaFin: fechaFin,
+            estado: "Pendiente",
+            responsable: responsable
+        }
+        const xhttp = new XMLHttpRequest();
+        const jsonData = JSON.stringify(nuevaActividad)
+    
+        xhttp.open("POST", "https://sheet.best/api/sheets/14a65b8d-0e33-4138-86d4-f694dc4d93c5", true);
+        xhttp.setRequestHeader("Content-Type", "application/json")
+        xhttp.send(jsonData);
+        xhttp.onload = function () {
+            if (xhttp.readyState === 4 && xhttp.status === 200) {
+                const data = JSON.parse(xhttp.response);
+                console.log(data)
+
+                cargarData();
+                actividades = data;
+
+                alert("Datos enviados");
+                document.querySelector('#cerrarModal').click();
+            } else {
+                console.log(xhttp.responseText)
+            }
+        }
+    }
+}
+
+function editarActividad(id){
     const modal = document.getElementById('modalActividad');
     modal.querySelector('.modal-title').textContent = "Editar actividad";
     const actSeleccionada = actividades.find((actividad) => parseInt(actividad.ID) === id)
@@ -111,16 +156,26 @@ async function editarActividad(id){
     const descripcion = modal.querySelector("#descripcion");
     const dias = modal.querySelector("#dias");
     const fechaInicio = modal.querySelector("#fechaInicio");
+    const fechaFin = modal.querySelector("#fechaFin");
     const responsable = modal.querySelector("#responsable");
 
     if(actSeleccionada){
         descripcion.value = actSeleccionada.descripcion;
         dias.value = actSeleccionada.dias;
         fechaInicio.value = actSeleccionada.fechaInicio;
+        fechaFin.value = actSeleccionada.fechaFin;
         responsable.value = actSeleccionada.responsable;
+
+        $('#botonCrear').hide();
+        // $("#submitEdit").attr("onclick", function(){
+        //     submitEdit(id)
+        // });
     } else {
         console.log("No encontrado. Param: " + id)
     }
+}
+async function submitEdit(id){
+    alert("Editando Actividad: "+id)
 }
 
 async function eliminarActividad(id){

@@ -64,6 +64,7 @@ body > * {
 }
 .main-container .ejercicio-container .actividades-container .card-actividad {
   margin-right: 15px;
+  margin-bottom: 15px;
   width: 325px;
 }
 .main-container .ejercicio-container .actividades-container .card-actividad .card-body {
