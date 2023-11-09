@@ -62,7 +62,10 @@ function cargarActividades(cards){
                 </div>
             </div>
             <div class="card-footer">
-                <button class="btn btn-${actividad.estado==="Pendiente" ? 'success' : 'secondary'} " ${actividad.estado==="Finalizado" && 'disabled'} onclick="completarActividad(${actividad.ID})">Finalizar</button>
+                <button class="btn btn-${actividad.estado==="Pendiente" ? 'success' : 'secondary'} " ${actividad.estado==="Finalizado" && 'disabled'} 
+                    onclick="completarActividad(${actividad.ID})">
+                    Finalizar
+                </button>
     
                 <div class="btn-group">
                     <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalActividad" data-bs-whatever="${actividad.ID}" onclick="editarActividad(${actividad.ID})">
@@ -98,6 +101,8 @@ function resetForm(){
 function abrirForm(){
     const modal = document.getElementById('modalActividad');
     modal.querySelector('.modal-title').textContent = "Crear nueva actividad";
+    $('#submitEdit').hide();
+    $('#botonCrear').show();
     resetForm();
 }
 
@@ -136,9 +141,8 @@ async function crearActividad(){
                 console.log(data)
 
                 cargarData();
-                actividades = data;
 
-                alert("Datos enviados");
+                // alert("Datos enviados");
                 document.querySelector('#cerrarModal').click();
             } else {
                 console.log(xhttp.responseText)
@@ -160,6 +164,9 @@ function editarActividad(id){
     const responsable = modal.querySelector("#responsable");
 
     if(actSeleccionada){
+        // Obtener el índice de la actividad en el array, para enviar como parámetro en URL
+        const indexAct = actividades.indexOf(actSeleccionada, 0);
+
         descripcion.value = actSeleccionada.descripcion;
         dias.value = actSeleccionada.dias;
         fechaInicio.value = actSeleccionada.fechaInicio;
@@ -167,21 +174,115 @@ function editarActividad(id){
         responsable.value = actSeleccionada.responsable;
 
         $('#botonCrear').hide();
-        // $("#submitEdit").attr("onclick", function(){
-        //     submitEdit(id)
-        // });
+        $('#submitEdit').show();
+        $('#submitEdit').click(function (e) { 
+            e.preventDefault();
+            submitEdit(id, indexAct);
+        });
     } else {
-        console.log("No encontrado. Param: " + id)
+        console.log("No encontrado. ID: " + id)
     }
 }
-async function submitEdit(id){
-    alert("Editando Actividad: "+id)
+async function submitEdit(id, index){
+    const descripcion = modalActividadBS.querySelector("#descripcion").value
+    const dias = modalActividadBS.querySelector("#dias").value
+    const fechaInicio = modalActividadBS.querySelector("#fechaInicio").value
+    const fechaFin = modalActividadBS.querySelector("#fechaFin").value
+    const responsable = modalActividadBS.querySelector("#responsable").value
+    
+    if(descripcion === "" || (dias === "" || dias <= 0) || fechaInicio === "" || fechaFin === "" || responsable === ""){
+        alert("Datos erróneos, verifique")
+    } else {
+        actEditada = {
+            ID: id,
+            descripcion: descripcion,
+            dias: dias,
+            fechaInicio: fechaInicio,
+            fechaFin: fechaFin,
+            estado: "Pendiente",
+            responsable: responsable
+        }
+        const xhttp = new XMLHttpRequest();
+        const jsonData = JSON.stringify(actEditada)
+    
+        xhttp.open("PUT", `https://sheet.best/api/sheets/14a65b8d-0e33-4138-86d4-f694dc4d93c5/${index}`, true);
+        xhttp.setRequestHeader("Content-Type", "application/json")
+        xhttp.send(jsonData);
+        xhttp.onload = function () {
+            if (xhttp.readyState === 4 && xhttp.status === 200) {
+                const data = JSON.parse(xhttp.response);
+                console.log(data)
+
+                cargarData();
+
+                // alert("Datos enviados");
+                document.querySelector('#cerrarModal').click();
+            } else {
+                console.log(xhttp.responseText)
+            }
+        }
+    }
 }
 
 async function eliminarActividad(id){
+    const actSeleccionada = actividades.find((actividad) => parseInt(actividad.ID) === id)
+    const indexAct = actividades.indexOf(actSeleccionada);
 
+    if(indexAct > -1){
+        const xhttp = new XMLHttpRequest();
+    
+        xhttp.open("DELETE", `https://sheet.best/api/sheets/14a65b8d-0e33-4138-86d4-f694dc4d93c5/${indexAct}`, true);
+        xhttp.send();
+        xhttp.onload = function () {
+            if (xhttp.readyState === 4 && xhttp.status === 200) {
+                const data = JSON.parse(xhttp.response);
+                console.log(data)
+
+                cargarData();
+
+                // alert("Datos enviados");
+                document.querySelector('#cerrarModal').click();
+            } else {
+                console.log(xhttp.responseText)
+            }
+        }
+    } else {
+        alert("No se encontró la actividad a eliminar")
+    }
 }
 
 async function completarActividad(id){
+    // alert("Finalizando tarea: "+ id)
+    const actSeleccionada = actividades.find((actividad) => parseInt(actividad.ID) === id)
+    const indexAct = actividades.indexOf(actSeleccionada);
+
+    if(indexAct > -1){
+        const actEditada = {
+            ...actSeleccionada,
+            estado: "Finalizado"
+        }
+
+        const xhttp = new XMLHttpRequest();
+        const jsonData = JSON.stringify(actEditada)
+    
+        xhttp.open("PATCH", `https://sheet.best/api/sheets/14a65b8d-0e33-4138-86d4-f694dc4d93c5/${indexAct}`, true);
+        xhttp.setRequestHeader("Content-Type", "application/json")
+        xhttp.send(jsonData);
+        xhttp.onload = function () {
+            if (xhttp.readyState === 4 && xhttp.status === 200) {
+                const data = JSON.parse(xhttp.response);
+                console.log(data)
+
+                cargarData();
+
+                // alert("Datos enviados");
+                document.querySelector('#cerrarModal').click();
+            } else {
+                console.log(xhttp.responseText)
+            }
+        }
+    } else {
+        alert("No se encontró la actividad a finalizar")
+    }
 
 }
